@@ -1,4 +1,4 @@
-NAME		=	./bin/calc
+NAME		=	./bin/calculator
 
 SRCS		=	$(wildcard sources/*.c)
 

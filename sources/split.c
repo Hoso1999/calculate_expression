@@ -1,4 +1,4 @@
-#include "calculate.h"
+#include "calculator.h"
 
 static bool charIsSeparator(char c, char *charset)
 {
@@ -16,7 +16,7 @@ static bool charIsSeparator(char c, char *charset)
 	return (false);
 }
 
-static int  countWords(char *str, char *charset)
+static int  countWords(const char *str, char *charset)
 {
 	int	i;
 	int	words;
@@ -33,7 +33,7 @@ static int  countWords(char *str, char *charset)
 	return (words);
 }
 
-static void	writeWord(char *dest, char *from, char *charset)
+static void	writeWord(char *dest, const char *from, char *charset)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ static void	writeWord(char *dest, char *from, char *charset)
 	dest[i] = '\0';
 }
 
-static void writeSplit(char **split, char *str, char *charset)
+static void writeSplit(char **split, const char *str, char *charset)
 {
 	int		i;
 	int		j;
@@ -71,7 +71,7 @@ static void writeSplit(char **split, char *str, char *charset)
 	}
 }
 
-char	**split(char *str, char *charset)
+char	**split(const char *str, char *charset)
 {
 	char	**split;
 	int		words;

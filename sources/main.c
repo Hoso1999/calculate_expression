@@ -1,49 +1,29 @@
-#include "calculate.h"
+#include "calculator.h"
 
-params getExpression(char *str)
+void print_error(const char *msg)
 {
-    char *data = str;
-    params res = 0.0;
-    params sum = 0.0;
-
-    while (*data)
-    {
-        strtold(data, &data);
-        shiftNext(&data);
-    }
-    data = str;
-    data = calloc(strlen(str) + 4, sizeof(char));
-    char st[4] = " + ";
-    strncpy(data, st, 4);
-    strcpy(data + 3, str);
-    char ** adds = split(data, "+-");
-    char *getSign = strschr(data);
-    int i = -1;
-    while (adds[++i])
-    {
-        sum = (adds[i + 1]) ? getValue(adds[i + 1]) : 0.0;
-        sum *= (getSign && *getSign == '-') ? -1 : 1;
-        res += sum;
-        getSign = (getSign) ? strschr(getSign + 1) : NULL;
-    }
-    vecstrdel(&adds);
-    strdel(&data);
-    return res;
+    if (!msg)
+        return ;
+    fprintf(stderr, "%s\n", msg);
+    exit(1);
 }
 
-
-int main(int argc, char **argv)
+bool isValid(const char *exp)
 {
-    if (argc != 2)
-        print_error("invalid arguments");
-    if (isEmpty(argv[1]))
-        print_error("string is empty");
-    if (isSign(*argv[1]))
-        print_error("expression is invalid");
-    char *av = strdup(argv[1]);
-    params nums = getExpression(argv[1]);
-    printf("res: %Lf\n", nums);
-    strcpy(argv[1], av);
-    strdel(&av);
+    if (!exp || !*exp || !hasNumber(exp) || !isOnlyExpression(exp) || !isSignValid(exp))
+        return false;
+    return true;
+}
+
+int main(void)
+{
+    printf("Put expression: ");
+    char *exp = readline();
+    if (!exp || !*exp)
+        print_error("invalid expression");
+    if (!isValidSubExp(exp) || !isValid(exp) || !isBalancedBrackets(exp))
+        print_error("invalid expression");
+    printf("result: %Lf\n", evaluate(exp));
+    memdel((void **)&exp);
     return 0;
 }
