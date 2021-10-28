@@ -2,4 +2,4 @@
 calculating expression from standard output
 
 # usage
-    make re && ./bin/calc <expression string>
+    make re && ./bin/calculator
