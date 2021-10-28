@@ -2,14 +2,12 @@
 
 static bool charIsSeparator(char c, char *charset)
 {
-	int	i;
+	int	i = -1;
 
-	i = 0;
-	while (charset[i])
+	while (charset[++i])
 	{
 		if (c == charset[i])
 			return (true);
-		++i;
 	}
 	if (!c)
 		return (true);
@@ -18,49 +16,38 @@ static bool charIsSeparator(char c, char *charset)
 
 static int  countWords(const char *str, char *charset)
 {
-	int	i;
-	int	words;
+	int	i = -1;
+	int	words = 0;
 
-	words = 0;
-	i = 0;
-	while (str[i] != '\0')
+	while (str[++i] != '\0')
 	{
 		if (charIsSeparator(str[i + 1], charset)
 			&& !charIsSeparator(str[i], charset))
 			++words;
-		++i;
 	}
 	return (words);
 }
 
 static void	writeWord(char *dest, const char *from, char *charset)
 {
-	int	i;
+	int	i = -1;
 
-	i = 0;
-	while (charIsSeparator(from[i], charset) == 0)
-	{
-		dest[i] = from[i];
-		++i;
-	}
+	while (!charIsSeparator(from[++i], charset)) dest[i] = from[i];
 	dest[i] = '\0';
 }
 
 static void writeSplit(char **split, const char *str, char *charset)
 {
-	int		i;
-	int		j;
-	int		word;
+	int		i = 0;
+	int		word = 0;
 
-	word = 0;
-	i = 0;
 	while (str[i])
 	{
 		if (charIsSeparator(str[i], charset) == 1)
 			++i;
 		else
 		{
-			j = 0;
+			int j = 0;
 			while (!charIsSeparator(str[i + j], charset))
 				++j;
 			split[word] = (char *)malloc(sizeof(char) * (j + 1));
@@ -74,9 +61,8 @@ static void writeSplit(char **split, const char *str, char *charset)
 char	**split(const char *str, char *charset)
 {
 	char	**split;
-	int		words;
+	int		words = countWords(str, charset);
 
-	words = countWords(str, charset);
 	split = (char **)malloc(sizeof(char *) * (words + 1));
 	split[words] = NULL;
 	writeSplit(split, str, charset);

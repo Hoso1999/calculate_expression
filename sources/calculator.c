@@ -3,6 +3,7 @@
 int findchr(const char * str, char c)
 {
     int i = -1;
+
     while (str && str[++i])
         if (str[i] == c)
             return i;
@@ -13,6 +14,7 @@ int findchr(const char * str, char c)
 bool isOnlyExpression(const char *exp)
 {
     int i = -1;
+
     int bracket = findchr(exp, '(');
     while (exp[++i])
     {
@@ -28,6 +30,7 @@ bool isOnlyExpression(const char *exp)
 bool hasNumber(const char *exp)
 {
     int i = -1;
+
     while (exp[++i])
         if (isdigit(exp[i]))
             return true;
@@ -54,6 +57,7 @@ params doOperation(params a, params b, char op)
 bool isValidSubExp(const char *exp)
 {
     char **sp = split(exp, "()");
+
     if (!strcmp(exp, sp[0]))
     {
         vecstrdel(&sp);
@@ -62,10 +66,11 @@ bool isValidSubExp(const char *exp)
         return true;
     }
     int i = -1;
-    int j;
+
     while (sp[++i])
     {
-        j = 0;
+        int j = 0;
+    
         if (sp[i][j] && (sp[i][j] == '+' || sp[i][j] == '-' || sp[i][j] == '*' || sp[i][j] == '/'))
             ++j;
         if (sp[i][j] && (sp[i][j] == '+' || sp[i][j] == '-' || sp[i][j] == '*' || sp[i][j] == '/'))

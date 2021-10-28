@@ -5,12 +5,16 @@ static void closeBracketPart(stack *values, stack *ops)
     while (!isEmpty(*ops) && *(char *)top(*ops) != '(')
     {
         params val2 = (top(*values) ? *(params *)top(*values) : 0);
+    
         pop(values);
         params val1 = (top(*values) ? *(params *)top(*values) : 0);
+    
         pop(values);
         char op = (top(*ops) ? *(char *)top(*ops) : '+');
+    
         pop(ops);
         params push_val = doOperation(val1, val2, op);
+    
         push(values, &push_val, sizeof(params));
     }
     if (!isEmpty(*ops))
@@ -22,15 +26,20 @@ static void operationsPart(stack *values, stack *ops, const char *exp, char *isM
     while (!isEmpty(*ops) && priority(*(char *)top(*ops)) >= priority(exp[i]))
     {
         params val2 = (top(*values) ? *(params *)top(*values) : 0);
+    
         pop(values);
         params val1 = (top(*values) ? *(params *)top(*values) : 0);
+    
         pop(values);
         char op = (top(*ops) ? *(char *)top(*ops) : '+');
+    
         pop(ops);
         params push_val = doOperation(val1, val2, op);
+    
         push(values, &push_val, sizeof(params));
     }
     char op = exp[i];
+
     if (!checkMinus(exp, i))
         push(ops, &op, sizeof(char));
     *isMinus = checkMinus(exp, i);
@@ -43,6 +52,7 @@ params evaluate(const char *expression)
     stack values = stackConstructor();
     stack ops = stackConstructor();
     char isMinus = '\0';
+
     while (exp[++i])
     {
         if (isspace(exp[i]))
@@ -53,6 +63,7 @@ params evaluate(const char *expression)
         {
             char *k = NULL;
             params val = strtold(exp + i, &k);
+
             if (isMinus == '-')
                 val *= -1;
             if (!k)
@@ -68,15 +79,20 @@ params evaluate(const char *expression)
     while (!isEmpty(ops))
     {
         params val2 = (top(values) ? *(params *)top(values) : 0);
+
         pop(&values);
         params val1 = (top(values) ? *(params *)top(values) : 0);
+
         pop(&values);
         char op = (top(ops) ? *(char *)top(ops) : '+');
+
         pop(&ops);
         params push_val = doOperation(val1, val2, op);
+
         push(&values, &push_val, sizeof(params));
     }
     params res = (top(values) ? *(params *)top(values) : 0);
+
     stackDestructor(&values);
     stackDestructor(&ops);
     memdel((void **)&exp);

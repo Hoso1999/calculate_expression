@@ -22,6 +22,7 @@ bool isBalancedBrackets(char *exp)
 {
     stack st = stackConstructor();
     int i = -1;
+
     while (exp[++i])
     {
         if (exp[i] == '(')
@@ -31,6 +32,7 @@ bool isBalancedBrackets(char *exp)
             if (isEmpty(st))
                 return false;
             char bracket = *(char *)top(st);
+
             pop(&st);
             if (!matchingPair(bracket, exp[i]))
             {
@@ -48,6 +50,7 @@ bool isBalancedBrackets(char *exp)
 char checkMinus(const char *exp, int i)
 {
     int index = i;
+
     while(--i != -1)
     {
         if(exp[i] == '(')

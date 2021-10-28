@@ -39,6 +39,7 @@ void printStack(stack st, bool isSign)
         while (!isEmpty(st))
         {
             char s = *(char *)top(st);
+
             printf("%c ", s);
             pop(&st);
         }
@@ -49,6 +50,7 @@ void printStack(stack st, bool isSign)
         while (!isEmpty(st))
         {
             long double num = *(long double *)top(st);
+    
             printf("%Lf ", num);
             pop(&st);
         }
