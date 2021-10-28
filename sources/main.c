@@ -40,7 +40,7 @@ bool isValid(const char *exp)
 
 int main(void)
 {
-    printf("Put expression: ");
+    printf("Enter the expression: ");
     char *exp = readline(stdin);
 
     if (!exp || !*exp)
