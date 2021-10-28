@@ -26,12 +26,12 @@ void    memdel(void **mem)
 
 void    pop_front(list *lst)
 {
-    Node *head = lst->head;
-    if (!head)
+    if (!lst->head)
         return ;
+    // Node *head = lst->head;
     lst->head = lst->head->next;
-    memdel((void **)&head->data);
-    memdel((void **)&head);
+    // memdel((void **)&head->data);
+    // memdel((void **)&head);
     --lst->size;
 }
 
@@ -52,15 +52,7 @@ void    push_front(list *lst, void *data, int size)
 
 void    listDestructor(list *lst)
 {
-    Node *head = lst->head;
-    Node *next = NULL;
-
-    while (head)
-    {
-        next = head->next;
-        memdel((void **)&head->data);
-        memdel((void **)&head);
-        head = next;
-    }
+    while (lst->size)
+        pop_front(lst);
     lst->head = NULL;
 }

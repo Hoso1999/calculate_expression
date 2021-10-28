@@ -17,6 +17,8 @@ void    pop(stack *st)
 
 void*   top(stack st)
 {
+    if (isEmpty(st))
+        return NULL;
     return st.values.head->data;
 }
 
@@ -28,4 +30,28 @@ bool    isEmpty(stack st)
 void    stackDestructor(stack *st)
 {
     listDestructor(&st->values);
+}
+
+void printStack(stack st, bool isSign)
+{
+    if (isSign)
+    {
+        while (!isEmpty(st))
+        {
+            char s = *(char *)top(st);
+            printf("%c ", s);
+            pop(&st);
+        }
+        printf("\n");   
+    }  
+    else
+    {
+        while (!isEmpty(st))
+        {
+            long double num = *(long double *)top(st);
+            printf("%Lf ", num);
+            pop(&st);
+        }
+        printf("\n");   
+    }
 }

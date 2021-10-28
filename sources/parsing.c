@@ -45,38 +45,34 @@ bool isBalancedBrackets(char *exp)
     return false;
 }
 
-bool checkMinus(const char *exp, int i)
+char checkMinus(const char *exp, int i)
 {
+    int index = i;
     while(--i != -1)
     {
-        if(isspace(exp[i]))
-            continue;
         if(exp[i] == '(')
-            return false;
+            return exp[index];
         if(exp[i] == ')' || isdigit(exp[i]))
-            return true;   
+            return '\0';
     }
-    return false;
+    return exp[index];
 }
 
 bool isnDoubleSign(const char *exp)
 {
     int i = 0;
-    while (exp[i] && isspace(exp[i])) ++i;
-    if (exp[i] && exp[i] == '-') ++i;
-    if (exp[i] && (exp[i] == '-' || !isdigit(exp[i]))) return false;
+
+    if (exp[i] && (exp[i] == '-' || exp[i] == '+')) ++i;
+    if (exp[i] && (exp[i] == '-' || exp[i] == '+' || !isdigit(exp[i]))) return false;
     skip(exp, &i);
-    while (exp[i] && isspace(exp[i])) ++i;
     if (exp[i] && isdigit(exp[i]))
-        print_error("invalid expression");
+        return false;
     if (exp[i] && (exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/'))
         ++i;
-    while (exp[i] && isspace(exp[i])) ++i;
     if (exp[i] && (exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/'))
         return false;
     skip(exp, &i);
-    while (exp[i] && isspace(exp[i])) ++i;
     if (exp[i] && isdigit(exp[i]))
-        print_error("invalid expression");
+        return false;
     return true;
 }

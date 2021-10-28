@@ -23,6 +23,6 @@ void    pop(stack *st);
 void*   top(stack st);
 bool    isEmpty(stack st);
 void    stackDestructor(stack *st);
-
+void    printStack(stack st, bool isSign);
 
 #endif

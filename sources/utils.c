@@ -1,19 +1,19 @@
 #include "calculator.h"
 
-char *readline(void)
+char *readline(FILE *fp)
 {
     size_t csize = BUFFER_SIZE;
     size_t cpos = 0;
-    char *str = malloc(BUFFER_SIZE);
+    char *str = (char *)malloc(BUFFER_SIZE * sizeof(char));
     char c;
-    while((c = fgetc(stdin)) != '\n' && c != '\r')
+    while((c = fgetc(fp)) != '\n' && c != '\r')
     {
         str[cpos] = c;
         ++cpos;
         if(cpos == csize)
         {
             csize += BUFFER_SIZE;
-            str = realloc(str, csize);
+            str = (char *)realloc(str, csize);
         }
     }
     str[cpos] = '\0';

@@ -1,13 +1,27 @@
 #include "calculator.h"
 
+int findchr(const char * str, char c)
+{
+    int i = -1;
+    while (str && str[++i])
+        if (str[i] == c)
+            return i;
+    return -1;
+    
+}
+
 bool isOnlyExpression(const char *exp)
 {
     int i = -1;
+    int bracket = findchr(exp, '(');
     while (exp[++i])
     {
         if (!InputCheck(exp[i]))
             return false;
     }
+    if (bracket > 0)
+        if (isdigit(exp[bracket - 1]))
+            return false;
     return true;
 }
 
@@ -52,11 +66,10 @@ bool isValidSubExp(const char *exp)
     while (sp[++i])
     {
         j = 0;
-        while (sp[i][j] && isspace(sp[i][j])) ++j;
         if (sp[i][j] && (sp[i][j] == '+' || sp[i][j] == '-' || sp[i][j] == '*' || sp[i][j] == '/'))
             ++j;
         if (sp[i][j] && (sp[i][j] == '+' || sp[i][j] == '-' || sp[i][j] == '*' || sp[i][j] == '/'))
-            print_error("invalid expression");
+            return false;
         if (!isnDoubleSign(sp[i] + j))
         {
             vecstrdel(&sp);
