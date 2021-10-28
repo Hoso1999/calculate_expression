@@ -1,5 +1,5 @@
 # calculate_expression
-calculating expression in string
+calculating expression from standard output
 
 # usage
-    ./bin/calc <expression string>
+    make re && ./bin/calc <expression string>
