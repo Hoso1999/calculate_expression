@@ -18,7 +18,14 @@ MKDIR		=	mkdir -p
 
 INCLUDES	=	includes
 
-CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDES)
+OS			=	$(shell uname -s)
+
+LINKERS		=	
+ifeq (OS, Linux)
+	LINKERS = -lm
+endif
+
+CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDES) $(LINKERS)
 
 objects/%.o:	sources/%.c
 				@if [ ! -d $(OBJS_DIR) ]; then $(MKDIR) $(OBJS_DIR); fi
