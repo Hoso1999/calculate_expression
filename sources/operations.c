@@ -55,9 +55,7 @@ params evaluate(const char *expression)
 
     while (exp[++i])
     {
-        if (isspace(exp[i]))
-            continue ;
-        else if (exp[i] == '(')
+        if (exp[i] == '(')
             push(&ops, &exp[i], sizeof(char));
         else if (isdigit(exp[i]))
         {
