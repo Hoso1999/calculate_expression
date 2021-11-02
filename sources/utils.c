@@ -7,7 +7,7 @@ char *readline(FILE *fp)
     size_t pos = 0;
     char *line = (char *)malloc(BUFFER_SIZE * sizeof(char));
 
-    while((c = fgetc(fp)) != '\n' && c != '\r')
+    while((c = fgetc(fp)) != '\n' && c != '\r' && c != EOF)
     {
         line[pos] = c;
         ++pos;

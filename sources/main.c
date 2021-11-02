@@ -38,10 +38,15 @@ bool isValid(const char *exp)
     return trim;
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
-    printf("Enter the expression: ");
-    char *exp = readline(stdin);
+    if (argc > 3)
+        print_error("invalid arguments");
+    if (argc == 1)
+        printf("Enter the expression: ");
+    FILE *in = (argv[1]) ? fopen(argv[1], "r") : stdin;
+    FILE *out = (argc > 1 && argv[2]) ? fopen(argv[2], "w") : stdout;
+    char *exp = readline(in);
 
     if (!exp || !*exp)
         print_error("invalid expression");
@@ -53,9 +58,11 @@ int main(void)
     params res = evaluate(expression);
 
     if (floorl(res) == res)
-        printf("result: %ld\n", (long)res);
+        fprintf(out, "result: %ld\n", (long)res);
     else
-        printf("result: %Lf\n", res);
+        fprintf(out, "result: %Lg\n", res);
+    fclose(in);
+    fclose(out);
     memdel((void **)&exp);
     memdel((void **)&expression);
     return 0;
