@@ -5,16 +5,15 @@ static void closeBracketPart(stack *values, stack *ops)
     while (!isEmpty(*ops) && *(char *)top(*ops) != '(')
     {
         params val2 = (top(*values) ? *(params *)top(*values) : 0);
-    
         pop(values);
+
         params val1 = (top(*values) ? *(params *)top(*values) : 0);
-    
         pop(values);
+
         char op = (top(*ops) ? *(char *)top(*ops) : '+');
-    
         pop(ops);
+
         params push_val = doOperation(val1, val2, op);
-    
         push(values, &push_val, sizeof(params));
     }
     if (!isEmpty(*ops))
@@ -26,16 +25,15 @@ static void operationsPart(stack *values, stack *ops, const char *exp, char *isM
     while (!isEmpty(*ops) && priority(*(char *)top(*ops)) >= priority(exp[i]))
     {
         params val2 = (top(*values) ? *(params *)top(*values) : 0);
-    
         pop(values);
+
         params val1 = (top(*values) ? *(params *)top(*values) : 0);
-    
         pop(values);
+
         char op = (top(*ops) ? *(char *)top(*ops) : '+');
-    
         pop(ops);
+
         params push_val = doOperation(val1, val2, op);
-    
         push(values, &push_val, sizeof(params));
     }
     char op = exp[i];
@@ -47,11 +45,11 @@ static void operationsPart(stack *values, stack *ops, const char *exp, char *isM
 
 params evaluate(const char *expression)
 {
-    char *exp = strdup(expression);
-    int i = -1;
-    stack values = stackConstructor();
-    stack ops = stackConstructor();
-    char isMinus = '\0';
+    char    *exp = strdup(expression);
+    char    isMinus = '\0';
+    int     i = -1;
+    stack   values = stackConstructor();
+    stack   ops = stackConstructor();
 
     while (exp[++i])
     {
@@ -77,16 +75,15 @@ params evaluate(const char *expression)
     while (!isEmpty(ops))
     {
         params val2 = (top(values) ? *(params *)top(values) : 0);
-
         pop(&values);
+
         params val1 = (top(values) ? *(params *)top(values) : 0);
-
         pop(&values);
+
         char op = (top(ops) ? *(char *)top(ops) : '+');
-
         pop(&ops);
-        params push_val = doOperation(val1, val2, op);
 
+        params push_val = doOperation(val1, val2, op);
         push(&values, &push_val, sizeof(params));
     }
     params res = (top(values) ? *(params *)top(values) : 0);

@@ -21,8 +21,9 @@ INCLUDES	=	includes
 OS			=	$(shell uname -s)
 
 LINKERS		=	
+
 ifeq (OS, Linux)
-	LINKERS = -lm
+	LINKERS =	-lm
 endif
 
 CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDES) $(LINKERS)

@@ -1,10 +1,21 @@
 #include "calculator.h"
 
-void print_error(const char *msg)
+void print_error(int len, ...)
 {
-    if (!msg)
-        return ;
-    fprintf(stderr, "%s\n", msg);
+    va_list lst;
+    int i = 0;
+
+    va_start(lst, len);
+    while (i < len)
+    {
+        const char *msg = va_arg(lst, const char *);
+        if (!msg)
+            return ;
+        fprintf(stderr, "%s", msg);
+        ++i;
+    }
+    fprintf(stderr, "\n");
+    va_end(lst);
     exit(1);
 }
 
@@ -41,20 +52,31 @@ bool isValid(const char *exp)
 int main(int argc, char **argv)
 {
     if (argc > 3)
-        print_error("invalid arguments");
+        print_error(1, "invalid arguments");
     if (argc == 1)
         printf("Enter the expression: ");
+
     FILE *in = (argv[1]) ? fopen(argv[1], "r") : stdin;
+
+    if (!in)
+        print_error(4, "<", argv[1], ">", " file is not exists");
+
     FILE *out = (argc > 1 && argv[2]) ? fopen(argv[2], "w") : stdout;
+
+    if (!out)
+        print_error(4, "<", argv[2], ">", " file error");
+
     char *exp = readline(in);
 
     if (!exp || !*exp)
-        print_error("invalid expression");
+        print_error(1, "invalid expression");
+
     char *expression = parseExp(exp);
 
     if (!isValid(expression) || !isValidSubExp(expression)|| !isBalancedBrackets(expression))
-        print_error("invalid expression");
+        print_error(1, "invalid expression");
     ReaplaceAll(&expression);
+
     params res = evaluate(expression);
 
     if (floorl(res) == res)

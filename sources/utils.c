@@ -2,10 +2,10 @@
 
 char *readline(FILE *fp)
 {
-    char c;
-    size_t size = BUFFER_SIZE;
-    size_t pos = 0;
-    char *line = (char *)malloc(BUFFER_SIZE * sizeof(char));
+    size_t  size = BUFFER_SIZE;
+    size_t  pos = 0;
+    char    *line = (char *)malloc(BUFFER_SIZE * sizeof(char));
+    char    c;
 
     while((c = fgetc(fp)) != '\n' && c != '\r' && c != EOF)
     {
@@ -35,6 +35,7 @@ void vecstrdel(char ***vec)
 {
     if (!vec || !*vec)
         return;
+
     int i = -1;
 
     while ((*vec)[++i])

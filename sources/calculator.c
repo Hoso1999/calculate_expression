@@ -14,13 +14,11 @@ int findchr(const char * str, char c)
 bool isOnlyExpression(const char *exp)
 {
     int i = -1;
-
     int bracket = findchr(exp, '(');
+
     while (exp[++i])
-    {
         if (!InputCheck(exp[i]))
             return false;
-    }
     if (bracket > 0)
         if (isdigit(exp[bracket - 1]))
             return false;
@@ -39,10 +37,8 @@ bool hasNumber(const char *exp)
 
 int priority(char op)
 {
-    if (op == '+' || op == '-')
-        return 1;
-    if(op == '*' || op == '/')
-        return 2;
+    if (op == '+' || op == '-') return 1;
+    if (op == '*' || op == '/') return 2;
     return 0;
 }
 

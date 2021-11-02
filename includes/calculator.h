@@ -4,6 +4,7 @@
 #include "stack.h"
 #include <ctype.h>
 #include <math.h>
+#include <stdarg.h>
 
 typedef long double params;
 #define BUFFER_SIZE 32
@@ -13,7 +14,7 @@ typedef long double params;
 char**  split(const char *str, char *charset);
 int     priority(char op);
 params  doOperation(params a, params b, char op);
-void    print_error(const char *msg);
+void    print_error(int len, ...);
 void    skip(const char *str, int *i);
 bool    matchingPair(char start, char end);
 bool    isBalancedBrackets(char *exp);

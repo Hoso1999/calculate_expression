@@ -9,6 +9,7 @@ Node*   createNode(void *data, int size)
 {
     if (size <= 0 || !data)
         return NULL;
+
     Node *node = (Node *)malloc(sizeof(Node));
 
     node->next = NULL;

@@ -3,25 +3,23 @@
 void skip(const char *str, int *i)
 {
     while (str[*i] && isdigit(str[*i])) ++(*i);
-    if (str[*i] && str[*i] != '.')
-        return ;
+    if (str[*i] && str[*i] != '.') return ;
     if (str[*i] && str[*i + 1] && str[*i] == '.' && str[*i + 1] == '.')
-        print_error("invalid expression");
+        print_error(1, "invalid expression");
     ++(*i);
     while (str[*i] && isdigit(str[*i])) ++(*i);
 }
 
 bool matchingPair(char start, char end)
 {
-    if (start == '(' && end == ')')
-        return true;
+    if (start == '(' && end == ')') return true;
     return false;
 }
 
 bool isBalancedBrackets(char *exp)
 {
-    stack st = stackConstructor();
-    int i = -1;
+    stack   st = stackConstructor();
+    int     i = -1;
 
     while (exp[++i])
     {
@@ -31,9 +29,10 @@ bool isBalancedBrackets(char *exp)
         {
             if (isEmpty(st))
                 return false;
-            char bracket = *(char *)top(st);
 
+            char bracket = *(char *)top(st);
             pop(&st);
+
             if (!matchingPair(bracket, exp[i]))
             {
                 stackDestructor(&st);
