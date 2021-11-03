@@ -9,6 +9,7 @@ void print_error(int len, ...)
     while (i < len)
     {
         const char *msg = (const char *)va_arg(lst, const char *);
+
         if (!msg)
             return ;
         fprintf(stderr, "%s", msg);
