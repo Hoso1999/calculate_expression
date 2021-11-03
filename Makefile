@@ -4,13 +4,13 @@ SRCS		=	$(wildcard sources/*.c)
 
 OBJS		=	$(patsubst sources/%.c, objects/%.o, $(SRCS))
 
-CC			=	gcc
+CC		=	gcc
 
 OBJS_DIR	=	objects
 
 BIN_DIR		=	bin
 
-RM			=	rm -f
+RM		=	rm -f
 
 RMDIR		=	rm -rf
 
@@ -18,37 +18,36 @@ MKDIR		=	mkdir -p
 
 INCLUDES	=	includes
 
-OS			=	$(shell uname -s)
+UNAME		:=	$(shell uname -s)
 
 LINKERS		=	
-
-ifeq (OS, Linux)
-	LINKERS =	-lm
+ifeq ($(UNAME), Linux)
+	LINKERS = -lm
 endif
 
-CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDES) $(LINKERS)
+CFLAGS		=	-Wall -Wextra -Werror -I$(INCLUDES)
 
-objects/%.o:	sources/%.c
-				@if [ ! -d $(OBJS_DIR) ]; then $(MKDIR) $(OBJS_DIR); fi
-				$(CC) $(CFLAGS) -c $< -o $@
+objects/%.o:		sources/%.c
+			@if [ ! -d $(OBJS_DIR) ]; then $(MKDIR) $(OBJS_DIR); fi
+			$(CC) $(CFLAGS) -c $< -o $@
 
 all:			$(NAME)
 
 $(NAME):		$(OBJS)
-				@if [ ! -d $(BIN_DIR) ]; then $(MKDIR) $(BIN_DIR); fi
-				$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+			@if [ ! -d $(BIN_DIR) ]; then $(MKDIR) $(BIN_DIR); fi
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LINKERS)
 
 clean:
-				$(RMDIR) $(OBJS_DIR)
+			$(RMDIR) $(OBJS_DIR)
 
 fclean:			clean
 				$(RMDIR) $(BIN_DIR)
 
-re:				fclean all
+re:			fclean all
 
-.DEFAULT_GOAL	:= clear_on_fail
+.DEFAULT_GOAL	:=	 clear_on_fail
 
 clear_on_fail:
-				$(MAKE) all || $(MAKE) fclean
+			$(MAKE) all || $(MAKE) fclean
 
 .PHONY:			all clean fclean re clear_on_fail
